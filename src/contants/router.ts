@@ -1,4 +1,4 @@
-import { lazy } from 'react'
+import { lazy, ReactNode } from 'react'
 
 const Login = lazy(() => import('../page/Login'))
 const Home = lazy(() => import('../page/Home'))
@@ -6,11 +6,12 @@ const MainHome = lazy(() => import('../page/Home/subPage/Home'))
 
 
 interface RouterType {
-    name: string | null;
+    name?: string | null;
     path: string;
     key: string;
-    components?: any;
+    components?: ReactNode;
     children?: Array<RouterType>;
+    redirect?: string;
 }
 
 export const routerList: Array<RouterType> = [
@@ -31,7 +32,17 @@ export const routerList: Array<RouterType> = [
                 path: '/main/home',
                 key: '/main/home',
                 components: MainHome
+            },
+            {
+                path: '/main',
+                key: '/main/home=to',
+                redirect: '/main/home'
             }
         ]
     },
+    // {
+    //     path: '/',
+    //     key: '/main=to',
+    //     redirect: '/main'
+    // }
 ]

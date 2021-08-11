@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.less';
-import RouterComp from './router/index'
+import RouterComp from '@/router/index'
 
 function App() {
   return (
