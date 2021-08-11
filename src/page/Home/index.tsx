@@ -7,7 +7,7 @@ interface Iprops {
 export default (props: Iprops): ReactElement => {
     return (
         <>
-            <div></div>
+            home
         </>
     )
 }

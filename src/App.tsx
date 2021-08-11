@@ -1,11 +1,11 @@
 import React from 'react';
 import './App.less';
-import Router from './router'
+import RouterComp from './router/index'
 
 function App() {
   return (
     <div className="App">
-      <Router />
+      <RouterComp />
     </div>
   );
 }
