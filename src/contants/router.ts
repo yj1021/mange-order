@@ -1,4 +1,5 @@
 import { lazy, ReactNode } from 'react'
+import mainRouter from './mainRouter'
 
 const Login = lazy(() => import('../page/Login'))
 const Home = lazy(() => import('../page/Home'))
@@ -10,33 +11,32 @@ interface RouterType {
     path: string;
     key: string;
     components?: ReactNode;
-    children?: Array<RouterType>;
+    children?: RouterType[];
     redirect?: string;
+    auth?: string[];
+    icon?: ReactNode
 }
 
-export const routerList: Array<RouterType> = [
+export const routerList: RouterType[] = [
     {
         name: '登录',
         path: '/login',
         key: '/login',
-        components: Login
+        components: Login,
+        auth: ['super', 'normal']
     },
     {
         name: '首页',
         path: '/main',
         key: '/main',
         components: Home,
+        auth: ['super', 'normal'],
         children: [
-            {
-                name: '首页数据',
-                path: '/main/home',
-                key: '/main/home',
-                components: MainHome
-            },
+            ...mainRouter, 
             {
                 path: '/main',
                 key: '/main/home=to',
-                redirect: '/main/home'
+                redirect: '/main/home',
             }
         ]
     },

@@ -1,6 +1,7 @@
 import React, { ReactElement, ReactNode } from 'react';
 import { Layout } from 'antd';
 import SiderComp from '../Sider'
+import HeaderComp from '@/component/Header'
 import './index.less'
 
 const { Header, Footer, Sider, Content } = Layout;
@@ -18,7 +19,9 @@ export default function LayoutComp({
         <SiderComp />
       </Sider>
       <Layout>
-        <Header>Header</Header>
+        <Header>
+          <HeaderComp />
+        </Header>
         <Content>{ children }</Content>
       </Layout>
     </Layout>
