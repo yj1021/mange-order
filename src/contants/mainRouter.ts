@@ -8,7 +8,10 @@ import {
     MailOutlined,
 } from '@ant-design/icons';
 
-const MainHome = lazy(() => import('../page/Home/subPage/Home'))
+const MainHome = lazy(() => import('@/page/Home/subPage/Home'))
+const StoreInfo = lazy(() => import('@/page/Home/subPage/StoreInfo'))
+const ShopInfo = lazy(() => import('../page/Home/subPage/ShopInfo'))
+const ShopList = lazy(() => import('../page/Home/subPage/ShopInfo/ShopList'))
 
 
 export default [
@@ -24,7 +27,7 @@ export default [
         name: '商店信息',
         path: '/main/storeInfo',
         key: '/main/storeInfo',
-        components: MainHome,
+        components: StoreInfo,
         auth: ['super', 'normal'],
         icon: MenuFoldOutlined
     },
@@ -32,7 +35,7 @@ export default [
         name: '商品信息',
         path: '/main/shopInfo',
         key: '/main/shopInfo',
-        components: MainHome,
+        components: ShopInfo,
         auth: ['super', 'normal'],
         icon: PieChartOutlined,
         children: [
@@ -40,7 +43,7 @@ export default [
                 name: '商品列表',
                 path: '/main/shopInfo/shopList',
                 key: '/main/shopInfo/shopList',
-                components: MainHome,
+                components: ShopList,
                 auth: ['super', 'normal'],
                 icon: DesktopOutlined,
             }

@@ -9,7 +9,6 @@ interface Iprops {
 export default (props: Iprops): ReactElement => {
     let { children } = props
     const userInfo = useSelector((state: any) => state.userInfo)
-    console.log(userInfo, '--')
     return (
         <>
             <Layout children={children}/>

@@ -9,3 +9,7 @@ export const validator = (rule, value, callback, regs) => {
         callback(farmat)
     }
 }
+
+export const getRandomNum = (min, max) => {
+    return Math.floor(Math.random()* (max - min + 1) + min) 
+}

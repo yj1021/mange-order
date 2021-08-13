@@ -16,7 +16,6 @@ export default function Sider({}: Props): ReactElement {
   const location = useLocation()
 
   useEffect(() => {
-    console.log(location)
     let { pathname } = location
     let breadInfo = getBreadInfo(pathname, menuList, [])
     breadInfo[breadInfo.length -1].path = ''
@@ -73,7 +72,7 @@ export default function Sider({}: Props): ReactElement {
         mode="inline" 
         onOpenChange={onOpenChange}
         openKeys={openkey}
-        defaultSelectedKeys={[location.pathname]}
+        selectedKeys={[location.pathname]}
     >{renderMenu(menuList)}</Menu>
     </>
   );

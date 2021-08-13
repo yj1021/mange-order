@@ -7,48 +7,61 @@ interface Props {
     echartsData: {
         options: any,
         configs: {
-            noData: boolean,
-            loading: false
+            noData: boolean
         }
-    }
+    },
+    loading?: boolean;
+    onClick?: Function;
+}
+
+const usePrevious = (obj) => {
+    let ref = useRef()
+
+    useEffect(() => {
+        ref.current = obj
+    }, [obj])
+
+    return ref.current
 }
 
 export default function EchartsComp({
-    echartsData
+    echartsData,
+    loading,
+    onClick
 }: Props): ReactElement {
 
     const echartsRef = useRef()
+    const obj = usePrevious(echartsData)
 
     const riseChange = (myEcharts: any) => {
         myEcharts.resize()
     }
 
     useEffect(() => {
-        console.log(12122112)
-    })
-
-    useDeepCompareEffect(() => {
         let { options, configs } = echartsData
-        let { loading } = configs
+        // let { loading } = configs
         if(!echartsRef.current) return
-        console.log(echartsData, '-dasdasdasdas')
         let myEcharts = echarts.init(echartsRef.current)
-        console.log(loading, 'loading')
+        myEcharts.off('click')
         if(loading) {
             myEcharts.showLoading()
+            return
         }else{
             myEcharts.hideLoading()
         }
 
         !loading && myEcharts.setOption(options)
 
+        myEcharts.on('click', (params): void => {
+            onClick && onClick(params)
+        })
+
         window.addEventListener('resize', () => riseChange(myEcharts), false)
 
         return () => {
             window.removeEventListener('resize', () => riseChange(myEcharts), false)
         }
-
-    }, [echartsData])
+    }, [obj, loading])
 
     return (
         <div className="my_echarts">

@@ -12,7 +12,6 @@ export default function RouterComp({ }: Props): ReactElement {
     return <Switch>
             {routerList.map((router: any) => {
               let { path, components, key, children, redirect } = router
-              console.log(redirect)
               if (children && children.length) {
                 return <Route path={path} key={key} render={() => {
                   let WrapperComp = components

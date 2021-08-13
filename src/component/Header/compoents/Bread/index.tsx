@@ -10,7 +10,6 @@ interface Props {
 
 export default function Bread({}: Props): ReactElement {
     const menuInfo = useSelector((state: any) => state.menuInfo).breadInfo
-    console.log(menuInfo, '--')
     return (
         <Breadcrumb>
             {menuInfo.map(bread => {
