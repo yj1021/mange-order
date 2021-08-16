@@ -2,11 +2,13 @@ import { USERINFO } from '../type'
 
 interface UserInfoType {
     username: string;
+    role: string;
     [propName: string]: any;
 }
 
-const userInfo = {
-    username: ''
+const userInfo: UserInfoType = {
+    username: sessionStorage.userInfo && (JSON.parse(sessionStorage.userInfo) as any).username,
+    role: 'super'
 }
 
 export default (state = userInfo, action) => {

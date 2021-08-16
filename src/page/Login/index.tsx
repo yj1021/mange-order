@@ -58,11 +58,12 @@ export default function Login({}: Props): ReactElement {
         dispatch({
             type: USERINFO,
             format: {
+                role: 'super',
                 username,
                 token: 'dahsidhas21iodaisjdoandansdas'
             }
         })
-        history.push('/main')
+        history.push('/main/home')
       }
   };
 

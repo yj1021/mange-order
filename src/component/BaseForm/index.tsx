@@ -1,16 +1,18 @@
 import React, { ReactElement, ReactNode } from 'react';
-import { Form, Input, Button, Space } from 'antd';
+import { Form, Input, Button, Space, Select } from 'antd';
 import { FormItem } from '@/type';
 import Layout from 'antd/lib/layout/layout';
 
+
+const { Option } = Select
 interface Props {
   formList: Array<FormItem>;
+  getFormData: Function;
   placeholder?: any;
   layout?: any;
   formItemLayout?: any;
   submitText?: string;
   resetFn?: Function;
-  getFormData: Function;
   initData?: any;
 }
 
@@ -50,12 +52,19 @@ export default function BaseForm({
     });
 
   const getFormItem = (formItem): ReactNode => {
-    const { type, placeholder } = formItem;
+    const { type, placeholder, optionList, name } = formItem;
     switch (type) {
       case 'password':
-        return <Input.Password placeholder={placeholder} />;
+        return <Input.Password placeholder={placeholder} key={name + 'item'}/>;
+      case 'select':
+        return <Select style={{width: 200}} key={name + 'item'} allowClear>
+                { optionList.map(option => {
+                  const { name, label } = option
+                  return <Option value={name} key={name}>{label}</Option>
+                })} 
+               </Select>
       default:
-        return <Input placeholder={placeholder} allowClear />;
+        return <Input placeholder={placeholder} allowClear key={name + 'item'}/>;
     }
   };
 

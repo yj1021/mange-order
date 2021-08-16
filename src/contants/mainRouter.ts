@@ -12,6 +12,7 @@ const MainHome = lazy(() => import('@/page/Home/subPage/Home'))
 const StoreInfo = lazy(() => import('@/page/Home/subPage/StoreInfo'))
 const ShopInfo = lazy(() => import('../page/Home/subPage/ShopInfo'))
 const ShopList = lazy(() => import('../page/Home/subPage/ShopInfo/ShopList'))
+const Personal = lazy(() => import('../page/Home/Personal'))
 
 
 export default [
@@ -48,5 +49,13 @@ export default [
                 icon: DesktopOutlined,
             }
         ]
-    }
+    },
+    {
+        name: '个人中心',
+        path: '/main/personal',
+        key: '/main/personal',
+        components: Personal,
+        icon: ContainerOutlined,
+        auth: ['super', 'normal']
+    },
 ]

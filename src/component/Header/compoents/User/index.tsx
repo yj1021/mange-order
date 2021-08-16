@@ -1,6 +1,7 @@
 import React, { ReactElement } from 'react'
 import { Dropdown, Menu, Avatar } from 'antd';
 import { DownOutlined, UserOutlined } from '@ant-design/icons';
+import { NavLink, useHistory } from 'react-router-dom'
 import './index.less'
 
 interface Props {
@@ -9,10 +10,12 @@ interface Props {
 
 export default function User({}: Props): ReactElement {
 
+  const history = useHistory()
+
     const menu = (
         <Menu>
           <Menu.Item key="0">
-            个人信息
+            <NavLink to="/main/personal">个人信息</NavLink>
           </Menu.Item>
           <Menu.Item key="1">
             退出
@@ -27,7 +30,11 @@ export default function User({}: Props): ReactElement {
                     操作 <DownOutlined />
                 </a>
             </Dropdown>
-            <Avatar size={40} icon={<UserOutlined />} />
+            <div onClick={() => {
+              history.push('/main/personal')
+            }}>
+              <Avatar size={40} icon={<UserOutlined />}/>
+            </div>
         </div>
     )
 }
