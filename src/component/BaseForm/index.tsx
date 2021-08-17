@@ -70,6 +70,7 @@ export default function BaseForm({
 
   const resetData = () => {
     form.resetFields()
+    resetFn()
   }
 
   return (

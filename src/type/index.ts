@@ -10,3 +10,15 @@ export interface FormItem {
     optionList?: OptionItem[];
     [propName: string]: any;
 }
+
+export interface ColumnsType {
+    title: string;
+    dataIndex: string;
+    key: string;
+    [propName: string]: any;
+}
+
+export interface DataType {
+    key: string;
+    [propName: string]:any;
+}

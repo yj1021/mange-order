@@ -1,4 +1,5 @@
 import React, { ReactElement, ReactNode } from 'react'
+import { Card } from 'antd'
 
 interface Props {
     children: ReactNode
@@ -6,9 +7,8 @@ interface Props {
 
 export default function ShopInfo({children}: Props): ReactElement {
     return (
-        <div>
-            商店信息
+        <Card>
             {children}
-        </div>
+        </Card>
     )
 }

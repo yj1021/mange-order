@@ -12,7 +12,11 @@ const MainHome = lazy(() => import('@/page/Home/subPage/Home'))
 const StoreInfo = lazy(() => import('@/page/Home/subPage/StoreInfo'))
 const ShopInfo = lazy(() => import('../page/Home/subPage/ShopInfo'))
 const ShopList = lazy(() => import('../page/Home/subPage/ShopInfo/ShopList'))
+const ShopCategory = lazy(() => import('../page/Home/subPage/ShopInfo/ShopCategory'))
+
+
 const Personal = lazy(() => import('../page/Home/Personal'))
+
 
 
 export default [
@@ -47,6 +51,14 @@ export default [
                 components: ShopList,
                 auth: ['super', 'normal'],
                 icon: DesktopOutlined,
+            },
+            {
+                name: '商品类别',
+                path: '/main/shopInfo/shopCategory',
+                key: '/main/shopInfo/shopCategory',
+                components: ShopCategory,
+                auth: ['super', 'normal'],
+                icon: MailOutlined,
             }
         ]
     },

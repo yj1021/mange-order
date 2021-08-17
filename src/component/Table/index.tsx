@@ -1,23 +1,17 @@
 import React, { ReactElement } from 'react'
 import { Table, Pagination } from 'antd'
+import { ColumnsType, DataType } from '@/type'
+import BaseTable from './BaseTable'
+import CheckTable from './CheckTable'
 import './index.less'
 
-interface ColumnsType {
-    title: string;
-    dataIndex: string;
-    key: string;
-    [propName: string]: any;
-}
 
-interface DataType {
-    key: string;
-    [propName: string]:any;
-}
 
 interface Props {
     columns: ColumnsType[];
     data: DataType[];
     loading: boolean;
+    type?: string;
     pageConfig?: any;
     isPage?:boolean;
     pageSizeOptions?: string[];
@@ -26,22 +20,23 @@ interface Props {
     changeSelectKeys?: (keys: string[]) => void
 }
 
-export default function TableComp({
-    columns,
-    data,
-    loading, //pagination={}
-    pageConfig = {
-        total: 100,
-        current: 1,
-        pageSize: 10,
-    },
-    pageSizeOptions = ['10', '20', '50', '100'],
-    isPage = true,
-    changePage,
-    selectedRowKeys,
-    changeSelectKeys
-}: Props): ReactElement {
-
+export default function TableComp(props: Props): ReactElement {
+    const {
+        type = 'baseTable',
+        columns,
+        data,
+        loading, //pagination={}
+        pageConfig = {
+            total: 100,
+            current: 1,
+            pageSize: 10,
+        },
+        pageSizeOptions = ['10', '20', '50', '100'],
+        isPage = true,
+        changePage,
+        selectedRowKeys,
+        changeSelectKeys
+    } = props
 
     const onChangePage = (current, pageSize) => {
         console.log(current, pageSize)
@@ -49,22 +44,22 @@ export default function TableComp({
     }
 
     const selectChange = (selectedRowKeys) => {
-        console.log(selectedRowKeys, '--')
         changeSelectKeys && changeSelectKeys(selectedRowKeys)
+    }
+
+    const getTable = (type): ReactElement => {
+        console.log(type, '--')
+        switch(type) {
+            case 'CheckTable':
+                return <CheckTable {...props} />;
+            default:
+                return <BaseTable {...props} />;
+        }
     }
 
     return (
         <>
-            <Table 
-                rowSelection={{
-                    selectedRowKeys,
-                    onChange: selectChange
-                }}
-                columns={columns} 
-                dataSource={data} 
-                loading={loading} 
-                pagination={false}
-            />
+            { getTable(type) }
             {isPage && <Pagination
                 total={pageConfig.total}
                 pageSize={pageConfig.pageSize}

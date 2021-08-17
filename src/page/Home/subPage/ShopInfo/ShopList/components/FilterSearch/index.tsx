@@ -3,10 +3,11 @@ import FilterSearch from '@/component/FilterSearch';
 import { SHOP_STATUS } from '@/contants/contants'
 
 interface Props {
-    
+    startSearch: (any) => void;
+    [propName:string]: any;
 }
 
-export default function FilterSearchShopList({}: Props): ReactElement {
+export default function FilterSearchShopList(props: Props): ReactElement {
 
     const formList = [
         {
@@ -22,6 +23,6 @@ export default function FilterSearchShopList({}: Props): ReactElement {
         }
     ]
     return (
-        <FilterSearch formList={formList}/>
+        <FilterSearch formList={formList} {...props}/>
     )
 }
