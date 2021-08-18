@@ -1,16 +1,60 @@
-import React, { ReactElement, useState, useEffect } from 'react'
+import React, { ReactElement, useState, useEffect, HTMLAttributes, FC } from 'react'
 import FilterSearch from './components/FilterSearch'
 import Table from '@/component/Table'
-import { Switch, Space, Button, Form } from 'antd'
+import { Switch, Space, Button, Form, InputNumber, Input } from 'antd'
 import { ColumnsType, DataType } from '@/type'
 import DelBtn from '@/component/DelBtn'
 import { EditFilled, PlusOutlined } from '@ant-design/icons'
 
 interface Props {
-    
+
 }
 
-export default function ShopCategory({}: Props): ReactElement {
+interface EditableCellProps extends HTMLAttributes<HTMLElement> {
+    editing: boolean;
+    dataIndex: string;
+    title: any;
+    inputType: 'number' | 'text';
+    record: any;
+    index: number;
+    children: React.ReactNode;
+}
+
+const EditableCell = ({
+    editing,
+    dataIndex,
+    title,
+    inputType,
+    record,
+    index,
+    children,
+    ...restProps
+}: EditableCellProps): ReactElement => {
+    const inputNode = inputType === 'number' ? <InputNumber /> : <Input />;
+
+    return (
+        <td {...restProps}>
+            {editing ? (
+                <Form.Item
+                    name={dataIndex}
+                    style={{ margin: 0 }}
+                    rules={[
+                        {
+                            required: true,
+                            message: `Please Input ${title}!`,
+                        },
+                    ]}
+                >
+                    {inputNode}
+                </Form.Item>
+            ) : (
+                children
+            )}
+        </td>
+    );
+};
+
+export default function ShopCategory({ }: Props): ReactElement {
     const [form] = Form.useForm()
 
     const [tabelData, setTableData] = useState({
@@ -37,9 +81,9 @@ export default function ShopCategory({}: Props): ReactElement {
 
     const getData = (current: number, pageSize: number, params?: any) => {
         let list: any[] = []
-        setTableData(pre => ({...pre, loading: true}))
+        setTableData(pre => ({ ...pre, loading: true }))
         setTimeout(() => {
-            for(let i=0; i<pageSize; i++) {
+            for (let i = 0; i < pageSize; i++) {
                 list.push({
                     key: i + '' + current,
                     catagoryName: '分类' + current,
@@ -69,9 +113,9 @@ export default function ShopCategory({}: Props): ReactElement {
     const changeStatus = (key, status) => {
         console.log(key)
         setTableData((data: any) => {
-            let newData = {...data}
+            let newData = { ...data }
             newData.data.forEach(item => {
-                if(item.key === key) {
+                if (item.key === key) {
                     item.status = !status
                 }
             })
@@ -80,11 +124,30 @@ export default function ShopCategory({}: Props): ReactElement {
     }
 
     const confirm = () => {
+        //@ts-ignore
+    }
 
+    const save = async ({key}) => {
+        const row = await form.validateFields()
+        const newData = [...tabelData.data];
+        const index = newData.findIndex(item => key === item.key);
+        if(index > -1) {
+            newData.splice(index, 1, {...newData[index], ...row})
+            setTableData(data => {
+                let tableData = {...data}
+                tableData.data = newData
+                return tableData
+            })
+            setEditingKey('')
+        }
+    }
+
+    const cacel = () => {
+        setEditingKey('')
     }
 
     const edit = (record: any) => {
-        form.setFieldsValue({...record})
+        form.setFieldsValue({ ...record })
         setEditingKey(record.key)
     }
 
@@ -94,7 +157,7 @@ export default function ShopCategory({}: Props): ReactElement {
             title: '序号',
             dataIndex: 'index',
             align: 'center',
-            render: (text,record, index) => {
+            render: (text, record, index) => {
                 let { current, pageSize } = tabelData.pageConfig
                 return <div>{index + 1 + (current - 1) * pageSize}</div>
                 console.log(record, index)
@@ -104,7 +167,8 @@ export default function ShopCategory({}: Props): ReactElement {
             key: 'b',
             title: '分类名称',
             dataIndex: 'catagoryName',
-            align: 'center'
+            align: 'center',
+            editable: true
         },
         {
             key: 'c',
@@ -112,8 +176,9 @@ export default function ShopCategory({}: Props): ReactElement {
             dataIndex: 'status',
             align: 'center',
             render: (text, record) => {
+                const editable = isEditing(record)
                 let { status, key } = record
-                return <Switch checked={status} onChange={() => changeStatus(key, status)} />
+                return <Switch checked={status} disabled={!editable} onChange={() => changeStatus(key, status)} />
             }
         },
         {
@@ -124,24 +189,50 @@ export default function ShopCategory({}: Props): ReactElement {
             render: (text, record, index): ReactElement => {
                 const editable = isEditing(record)
                 return (
-                    <Space>
-                        <Button type="link" shape="circle" block icon={<EditFilled />} onClick={() => edit(record)}/>
-                        <DelBtn text="确定删除商品分类吗？" confirm= {confirm} />
-                    </Space>
+                    <div>
+                        {editable ? <Space>
+                            <Button type="primary" onClick={() => save(record)}>保存</Button>
+                            <DelBtn text="确定取消编辑吗？" confirm={cacel} type='cacel'/>
+                        </Space> : <Space>
+                            <Button type="link" shape="circle" block icon={<EditFilled />} onClick={() => edit(record)} />
+                            <DelBtn text="确定删除商品分类吗？" confirm={confirm} />    
+                        </Space>}
+                    </div>
                 )
             }
         },
     ]
+
+    const mergedColumns = columns.map(col => {
+        if (!col.editable) {
+            return col;
+        }
+        return {
+            ...col,
+            onCell: (record: any) => ({
+                record,
+                inputType: 'text',
+                dataIndex: col.dataIndex,
+                title: col.title,
+                editing: isEditing(record),
+            }),
+        };
+    });
     return (
         <div>
             <FilterSearch startSearch={startSearch} resetFn={resetFn} />
-            <Table 
-                columns={columns}
-                data={tabelData.data}
-                loading={tabelData.loading}
-                pageConfig={tabelData.pageConfig}
-                changePage={changePage}
-            />
+            <Form form={form} component={false}>
+                <Table
+                    //@ts-ignore
+                    EditableCell={EditableCell}
+                    columns={mergedColumns}
+                    data={tabelData.data}
+                    loading={tabelData.loading}
+                    pageConfig={tabelData.pageConfig}
+                    changePage={changePage}
+                />
+            </Form>
+
         </div>
     )
 }

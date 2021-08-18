@@ -18,6 +18,8 @@ export default function DelBtn({
         switch(type){
             case 'all':
                 return <Button danger>批量删除</Button>;
+            case 'cacel':
+                return <Button type='ghost'>取消</Button>;
             default:
                 return <Button type="link" shape="circle" danger block icon={<DeleteFilled />} />
         };
