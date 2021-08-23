@@ -39,7 +39,6 @@ export default function TableComp(props: Props): ReactElement {
     } = props
 
     const onChangePage = (current, pageSize) => {
-        console.log(current, pageSize)
         changePage && changePage(current, pageSize)
     }
 
@@ -48,7 +47,6 @@ export default function TableComp(props: Props): ReactElement {
     }
 
     const getTable = (type): ReactElement => {
-        console.log(type, '--')
         switch(type) {
             case 'CheckTable':
                 return <CheckTable {...props} />;

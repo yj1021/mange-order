@@ -1,9 +1,10 @@
 import React, { ReactElement, useState, useEffect } from 'react'
 import Table from '@/component/Table'
 import { Space, Button, notification } from 'antd';
-import { EditFilled, PlusOutlined } from '@ant-design/icons'
-import DelBtn from '@/component/DelBtn'
+import { EditFilled } from '@ant-design/icons'
+import DelBtn from '@/component/button/DelBtn'
 import FilterSearch from './components/FilterSearch'
+import AddButton from '@/component/button/AddButton'
 import './index.less'
 interface Props {
     
@@ -27,9 +28,7 @@ export default function ShopList({}: Props): ReactElement {
         getData(1, 10)
     }, [])
 
-    const confirm = () => {
-        console.log('确定')
-    }
+    const confirm = () => {}
 
     const getData = (current, pageSize, params: any = {}) => {
         let { shopName } = params
@@ -108,7 +107,6 @@ export default function ShopList({}: Props): ReactElement {
     ]
 
     const changeSelectKeys = (keys) => {
-        console.log(keys, pageConfig)
         setSelectedRowKeys(keys)
     }
 
@@ -137,7 +135,7 @@ export default function ShopList({}: Props): ReactElement {
             <div className="search_header">
                 <FilterSearch startSearch={startSearch} resetFn={resetFn} />
                 <Space style={{marginBottom: 20}}>
-                    <Button type='primary' icon={<PlusOutlined />}>新增</Button>
+                    <AddButton text='新增'/>
                     {selectedRowKeys.length > 1 && <DelBtn text="确定批量删除商品列表信息" confirm= {confirmAll} type='all' />}
                 </Space>
             </div>

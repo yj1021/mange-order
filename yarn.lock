@@ -14,10 +14,10 @@
   resolved "https://bnpm.byted.org/@ant-design/icons-svg/-/@ant-design/icons-svg-4.1.0.tgz#480b025f4b20ef7fe8f47d4a4846e4fee84ea06c"
   integrity sha1-SAsCX0sg73/o9H1KSEbk/uhOoGw=
 
-"@ant-design/icons@^4.6.2":
-  version "4.6.2"
-  resolved "https://bnpm.byted.org/@ant-design/icons/-/@ant-design/icons-4.6.2.tgz#290f2e8cde505ab081fda63e511e82d3c48be982"
-  integrity sha1-KQ8ujN5QWrCB/aY+UR6C08SL6YI=
+"@ant-design/icons@^4.6.3":
+  version "4.6.3"
+  resolved "https://bnpm.byted.org/@ant-design/icons/-/@ant-design/icons-4.6.3.tgz#cdcccf4df24d51501acef9228444efb7ef8938b1"
+  integrity sha1-zczPTfJNUVAazvkihETvt++JOLE=
   dependencies:
     "@ant-design/colors" "^6.0.0"
     "@ant-design/icons-svg" "^4.0.0"
@@ -1767,6 +1767,13 @@
   resolved "https://registry.yarnpkg.com/@types/html-minifier-terser/-/html-minifier-terser-5.1.1.tgz#3c9ee980f1a10d6021ae6632ca3e79ca2ec4fb50"
   integrity sha512-giAlZwstKbmvMk1OO7WXSj4OZ0keXAcl2TQq4LWHiiPH2ByaH7WeUzng+Qej8UPxxv+8lRTuouo0iaNDBuzIBA==
 
+"@types/http-proxy@^1.17.5":
+  version "1.17.7"
+  resolved "https://bnpm.byted.org/@types/http-proxy/-/@types/http-proxy-1.17.7.tgz#30ea85cc2c868368352a37f0d0d3581e24834c6f"
+  integrity sha1-MOqFzCyGg2g1Kjfw0NNYHiSDTG8=
+  dependencies:
+    "@types/node" "*"
+
 "@types/istanbul-lib-coverage@*", "@types/istanbul-lib-coverage@^2.0.0", "@types/istanbul-lib-coverage@^2.0.1":
   version "2.0.3"
   resolved "https://registry.yarnpkg.com/@types/istanbul-lib-coverage/-/istanbul-lib-coverage-2.0.3.tgz#4ba8ddb720221f432e443bd5f9117fd22cfd4762"
@@ -2371,13 +2378,13 @@ ansi-styles@^4.0.0, ansi-styles@^4.1.0:
   dependencies:
     color-convert "^2.0.1"
 
-antd@^4.16.11:
-  version "4.16.11"
-  resolved "http://bnpm.byted.org/antd/-/antd-4.16.11.tgz#924116b0de7370f914e9de6c8c5a4bf019b3d668"
-  integrity sha512-7Tsx0sTjpSpgRqnXIRbuerqf4pu8+V1OPY4oZXXqTzuYPwKHdnbfXMg/L35IfeLtK1QcwgF4lfTR7bChJIcWSw==
+antd@^4.16.12:
+  version "4.16.12"
+  resolved "http://bnpm.byted.org/antd/-/antd-4.16.12.tgz#8d32a1ad6a80fd2ea61e6f1c432b31782fd2cd50"
+  integrity sha512-vFptOyOo0EubF6sgdJdH8GwnphcZcxV2QG+znSUj4hMOzRI8a0p3XS2mvKpsS92bu4PBuvsc9wmNQNnOfh1GrA==
   dependencies:
     "@ant-design/colors" "^6.0.0"
-    "@ant-design/icons" "^4.6.2"
+    "@ant-design/icons" "^4.6.3"
     "@ant-design/react-slick" "~0.28.1"
     "@babel/runtime" "^7.12.5"
     array-tree-filter "^2.1.0"
@@ -2413,7 +2420,7 @@ antd@^4.16.11:
     rc-tooltip "~5.1.1"
     rc-tree "~4.2.1"
     rc-tree-select "~4.3.0"
-    rc-trigger "^5.2.1"
+    rc-trigger "^5.2.10"
     rc-upload "~4.3.0"
     rc-util "^5.13.1"
     scroll-into-view-if-needed "^2.2.25"
@@ -5808,7 +5815,18 @@ http-proxy-middleware@0.19.1:
     lodash "^4.17.11"
     micromatch "^3.1.10"
 
-http-proxy@^1.17.0:
+http-proxy-middleware@^2.0.1:
+  version "2.0.1"
+  resolved "http://bnpm.byted.org/http-proxy-middleware/-/http-proxy-middleware-2.0.1.tgz#7ef3417a479fb7666a571e09966c66a39bd2c15f"
+  integrity sha512-cfaXRVoZxSed/BmkA7SwBVNI9Kj7HFltaE5rqYOub5kWzWZ+gofV2koVN1j2rMW7pEfSSlCHGJ31xmuyFyfLOg==
+  dependencies:
+    "@types/http-proxy" "^1.17.5"
+    http-proxy "^1.18.1"
+    is-glob "^4.0.1"
+    is-plain-obj "^3.0.0"
+    micromatch "^4.0.2"
+
+http-proxy@^1.17.0, http-proxy@^1.18.1:
   version "1.18.1"
   resolved "https://registry.yarnpkg.com/http-proxy/-/http-proxy-1.18.1.tgz#401541f0534884bbf95260334e72f88ee3976549"
   integrity sha512-7mz/721AbnJwIVbnaSv1Cz3Am0ZLT/UBwkC92VlxhXv/k/BBQfM2fXElQNC27BVGr0uwUpplYPQM9LnaBMR5NQ==
@@ -6252,6 +6270,11 @@ is-plain-obj@^1.0.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/is-plain-obj/-/is-plain-obj-1.1.0.tgz#71a50c8429dfca773c92a390a4a03b39fcd51d3e"
   integrity sha1-caUMhCnfync8kqOQpKA7OfzVHT4=
+
+is-plain-obj@^3.0.0:
+  version "3.0.0"
+  resolved "http://bnpm.byted.org/is-plain-obj/-/is-plain-obj-3.0.0.tgz#af6f2ea14ac5a646183a5bbdb5baabbc156ad9d7"
+  integrity sha512-gwsOE28k+23GP1B6vFl1oVh/WOzmawBrKwo5Ev6wMKzPkaXaCDIQKzLnvsA42DRlbVTWorkgTKIviAKCWkfUwA==
 
 is-plain-object@^2.0.3, is-plain-object@^2.0.4:
   version "2.0.4"
@@ -9573,10 +9596,21 @@ rc-tree@^4.0.0, rc-tree@~4.2.1:
     rc-util "^5.0.0"
     rc-virtual-list "^3.0.1"
 
-rc-trigger@^5.0.0, rc-trigger@^5.0.4, rc-trigger@^5.1.2, rc-trigger@^5.2.1:
+rc-trigger@^5.0.0, rc-trigger@^5.0.4, rc-trigger@^5.1.2:
   version "5.2.9"
   resolved "http://bnpm.byted.org/rc-trigger/-/rc-trigger-5.2.9.tgz#795a787d2b038347dcde27b89a4a5cec8fc40f3e"
   integrity sha512-0Bxsh2Xe+etejMn73am+jZBcOpsueAZiEKLiGoDfA0fvm/JHLNOiiww3zJ0qgyPOTmbYxhsxFcGOZu+VcbaZhQ==
+  dependencies:
+    "@babel/runtime" "^7.11.2"
+    classnames "^2.2.6"
+    rc-align "^4.0.0"
+    rc-motion "^2.0.0"
+    rc-util "^5.5.0"
+
+rc-trigger@^5.2.10:
+  version "5.2.10"
+  resolved "http://bnpm.byted.org/rc-trigger/-/rc-trigger-5.2.10.tgz#8a0057a940b1b9027eaa33beec8a6ecd85cce2b1"
+  integrity sha512-FkUf4H9BOFDaIwu42fvRycXMAvkttph9AlbCZXssZDVzz2L+QZ0ERvfB/4nX3ZFPh1Zd+uVGr1DEDeXxq4J1TA==
   dependencies:
     "@babel/runtime" "^7.11.2"
     classnames "^2.2.6"

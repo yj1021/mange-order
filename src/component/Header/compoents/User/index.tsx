@@ -2,6 +2,8 @@ import React, { ReactElement } from 'react'
 import { Dropdown, Menu, Avatar } from 'antd';
 import { DownOutlined, UserOutlined } from '@ant-design/icons';
 import { NavLink, useHistory } from 'react-router-dom'
+import { useSelector } from 'react-redux'
+import { ROLETYPE } from '@/contants/contants'
 import './index.less'
 
 interface Props {
@@ -11,6 +13,8 @@ interface Props {
 export default function User({}: Props): ReactElement {
 
   const history = useHistory()
+
+  const userInfo = useSelector((state: any) => state.userInfo)
 
     const menu = (
         <Menu>
@@ -25,6 +29,7 @@ export default function User({}: Props): ReactElement {
 
     return (
         <div className="userInfo">
+            <div className='user'>欢迎你: {userInfo.username}, {ROLETYPE[userInfo.role]}</div>
             <Dropdown overlay={menu} trigger={['click']} className="user_dropdown">
                 <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
                     操作 <DownOutlined />

@@ -1,4 +1,4 @@
-import React, { ReactElement, FC } from 'react'
+import React, { ReactElement, FC, ReactHTMLElement } from 'react'
 import { ColumnsType, DataType } from '@/type'
 import { Table } from 'antd'
 
@@ -6,26 +6,22 @@ interface Props {
     columns: ColumnsType[];
     data: DataType[];
     loading: boolean;
-    EditableCell?: FC;
+    expandedRowRender: any;
     [propName:string]:any;
-    onChange?: () => void
+    onChange?: (page: any, filters: any, sorter: any) => void
 }
 
-export default function BaseTable({
+export default function ExpandTable({
     columns,
     data,
     loading,
-    EditableCell,
+    expandedRowRender,
     onChange
 }: Props): ReactElement {
     return (
         <>
             <Table
-                components={{
-                    body: {
-                        cell: EditableCell,
-                    },
-                }}
+                expandable={{expandedRowRender}}
                 columns={columns} 
                 dataSource={data} 
                 loading={loading} 

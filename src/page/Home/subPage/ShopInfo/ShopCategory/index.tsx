@@ -3,8 +3,10 @@ import FilterSearch from './components/FilterSearch'
 import Table from '@/component/Table'
 import { Switch, Space, Button, Form, InputNumber, Input } from 'antd'
 import { ColumnsType, DataType } from '@/type'
-import DelBtn from '@/component/DelBtn'
+import DelBtn from '@/component/button/DelBtn'
+import Modal from './components/Modal'
 import { EditFilled, PlusOutlined } from '@ant-design/icons'
+import AddButton from '@/component/button/AddButton'
 
 interface Props {
 
@@ -41,7 +43,7 @@ const EditableCell = ({
                     rules={[
                         {
                             required: true,
-                            message: `Please Input ${title}!`,
+                            message: `请输入${title}!`,
                         },
                     ]}
                 >
@@ -66,13 +68,13 @@ export default function ShopCategory({ }: Props): ReactElement {
         },
         loading: false,
     })
+    const [show, setShow] = useState<boolean>(false)
     const [params, setParams] = useState<any>({})
     const [editingKey, setEditingKey] = useState<string>('');
     const isEditing = (record: any) => record.key === editingKey;
 
     const startSearch = (params: any) => {
         setParams(params)
-        console.log(params)
     }
 
     const resetFn = () => {
@@ -111,7 +113,6 @@ export default function ShopCategory({ }: Props): ReactElement {
     }
 
     const changeStatus = (key, status) => {
-        console.log(key)
         setTableData((data: any) => {
             let newData = { ...data }
             newData.data.forEach(item => {
@@ -151,6 +152,10 @@ export default function ShopCategory({ }: Props): ReactElement {
         setEditingKey(record.key)
     }
 
+    const addCategory = () => {
+        setShow(true)
+    }
+
     const columns: ColumnsType[] = [
         {
             key: 'a',
@@ -160,7 +165,6 @@ export default function ShopCategory({ }: Props): ReactElement {
             render: (text, record, index) => {
                 let { current, pageSize } = tabelData.pageConfig
                 return <div>{index + 1 + (current - 1) * pageSize}</div>
-                console.log(record, index)
             }
         },
         {
@@ -168,7 +172,8 @@ export default function ShopCategory({ }: Props): ReactElement {
             title: '分类名称',
             dataIndex: 'catagoryName',
             align: 'center',
-            editable: true
+            editable: true,
+            sorter: true,
         },
         {
             key: 'c',
@@ -203,6 +208,13 @@ export default function ShopCategory({ }: Props): ReactElement {
         },
     ]
 
+    const tableChange = (a, b, c) => {
+        // console.log(a, b, c);
+        //ascend  生序
+        //descend 降序
+        
+    }
+
     const mergedColumns = columns.map(col => {
         if (!col.editable) {
             return col;
@@ -220,7 +232,10 @@ export default function ShopCategory({ }: Props): ReactElement {
     });
     return (
         <div>
-            <FilterSearch startSearch={startSearch} resetFn={resetFn} />
+            <div className='sp'>
+                <FilterSearch startSearch={startSearch} resetFn={resetFn} />
+                <AddButton text='添加' onClick={addCategory}/>
+            </div>
             <Form form={form} component={false}>
                 <Table
                     //@ts-ignore
@@ -230,9 +245,10 @@ export default function ShopCategory({ }: Props): ReactElement {
                     loading={tabelData.loading}
                     pageConfig={tabelData.pageConfig}
                     changePage={changePage}
+                    onChange={tableChange}
                 />
             </Form>
-
+            <Modal title='添加商品类型' show={show} setShow={setShow}/>
         </div>
     )
 }

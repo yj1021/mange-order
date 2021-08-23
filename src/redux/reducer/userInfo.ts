@@ -1,4 +1,4 @@
-import { USERINFO } from '../type'
+import { USERINFO, ClEAR_INFO } from '../type'
 
 interface UserInfoType {
     username: string;
@@ -7,7 +7,7 @@ interface UserInfoType {
 }
 
 const userInfo: UserInfoType = {
-    username: sessionStorage.userInfo && (JSON.parse(sessionStorage.userInfo) as any).username,
+    username: (JSON.parse(sessionStorage.userInfo || '{}') as any).username || '',
     role: 'super'
 }
 
@@ -15,7 +15,16 @@ export default (state = userInfo, action) => {
     let { type, format } = action
     switch(type) {
         case USERINFO:
-            return Object.assign({}, state, format)
+            let userInfo = Object.assign({}, state, format)
+            sessionStorage.userInfo = JSON.stringify({...userInfo})
+            return userInfo
+        case ClEAR_INFO:
+            let resState = {...state}
+            for(let key in resState) {
+                resState[key] = ''
+            }
+            sessionStorage.userInfo = ''
+            return resState
         default:
             return state
     }

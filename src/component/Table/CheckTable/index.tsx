@@ -21,7 +21,6 @@ export default function CheckTable({
 }: Props): ReactElement {
 
     const selectChange = (selectedRowKeys) => {
-        console.log(selectedRowKeys, '--')
         changeSelectKeys && changeSelectKeys(selectedRowKeys)
     }
 

@@ -10,10 +10,10 @@ const { SubMenu, Item } = Menu;
 interface Props {}
 
 export default function Sider({}: Props): ReactElement {
-
-  const [openkey, setOpenkey] = useState<string[]>([])
-  const dispatch = useDispatch()
   const location = useLocation()
+  const [openkey, setOpenkey] = useState<string[]>(JSON.parse(sessionStorage.openKeys || '[]'))
+  const dispatch = useDispatch()
+  
 
   useEffect(() => {
     let { pathname } = location
@@ -49,7 +49,9 @@ export default function Sider({}: Props): ReactElement {
   };
 
   const onOpenChange = (openKeys: string[]) => {
-    setOpenkey(openKeys)
+    let keyItem = openKeys.slice(-1)
+    sessionStorage.openKeys = JSON.stringify(keyItem)
+    setOpenkey(keyItem)
   }
 
   const getBreadInfo = (selectedKeys: string, menuList: any[], initBread: any[] = []): any[] => {

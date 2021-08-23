@@ -8,7 +8,6 @@ interface Props {
 }
 
 export default function FilterSearchCate(props: Props): ReactElement {
-    console.log(props)
     const formList: FormItem[] = [
         {
             type: 'text',

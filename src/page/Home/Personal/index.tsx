@@ -9,7 +9,6 @@ interface Props {
 
 export default function Personal({}: Props): ReactElement {
     const userInfo = useSelector((state: any) => state.userInfo)
-    console.log(userInfo, '--')
 
     return (
         <Card style={{padding: 10}}>
