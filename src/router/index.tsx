@@ -1,12 +1,15 @@
 import React, { ReactElement } from 'react';
 import { routerList } from '../contants/router'
 import { Switch, Route, Redirect } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 
 interface Props {
   [propName: string]: any;
 }
 
 export default function RouterComp({ }: Props): ReactElement {
+
+  const userInfo = useSelector((state: any) => state.userInfo)
 
   const renderRouter = (routerList) => {
     return <Switch>
@@ -29,6 +32,8 @@ export default function RouterComp({ }: Props): ReactElement {
             })}
           </Switch>
   }
+
+  console.log(renderRouter(routerList))
 
   return <>
     {renderRouter(routerList)}

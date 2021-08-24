@@ -40,9 +40,9 @@ export const routerList: RouterType[] = [
             }
         ]
     },
-    // {
-    //     path: '/',
-    //     key: '/main=to',
-    //     redirect: '/main'
-    // }
+    {
+        path: '/',
+        key: '/main=to',
+        redirect: '/main/home'
+    }
 ]

@@ -6,9 +6,12 @@ interface UserInfoType {
     [propName: string]: any;
 }
 
+const sessionUserIfo = JSON.parse(sessionStorage.userInfo || '{}')
+
 const userInfo: UserInfoType = {
-    username: (JSON.parse(sessionStorage.userInfo || '{}') as any).username || '',
-    role: 'super'
+    username: sessionUserIfo.username || '',
+    role: sessionUserIfo.role || 'super',
+    token: sessionUserIfo.token || ''
 }
 
 export default (state = userInfo, action) => {
@@ -23,6 +26,7 @@ export default (state = userInfo, action) => {
             for(let key in resState) {
                 resState[key] = ''
             }
+            sessionStorage.openKeys = ''
             sessionStorage.userInfo = ''
             return resState
         default:

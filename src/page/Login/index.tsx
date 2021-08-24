@@ -63,7 +63,7 @@ export default function Login({}: Props): ReactElement {
                 token: 'dahsidhas21iodaisjdoandansdas'
             }
         })
-        history.push('/main/home')
+        history.replace('/main/home')
       }
   };
 

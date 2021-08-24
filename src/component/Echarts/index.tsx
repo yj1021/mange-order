@@ -1,6 +1,7 @@
 import React, { ReactElement, useRef, useEffect } from 'react'
 import useDeepCompareEffect from 'use-deep-compare-effect';
 import * as echarts from 'echarts'
+import { usePrevious } from '@/hooks'
 import './index.less'
 
 interface Props {
@@ -12,16 +13,6 @@ interface Props {
     },
     loading?: boolean;
     onClick?: Function;
-}
-
-const usePrevious = (obj) => {
-    let ref = useRef()
-
-    useEffect(() => {
-        ref.current = obj
-    }, [obj])
-
-    return ref.current
 }
 
 export default function EchartsComp({

@@ -9,7 +9,10 @@ import {
     DiffOutlined,
     DatabaseOutlined,
     CalendarOutlined,
-    PlusOutlined
+    PlusOutlined,
+    SettingOutlined,
+    ProfileOutlined,
+    ReadOutlined
 } from '@ant-design/icons';
 
 const MainHome = lazy(() => import('@/page/Home/subPage/Home'))
@@ -23,6 +26,11 @@ const AccInfo = lazy(() => import('../page/Home/subPage/AccInfo'))
 const AccList = lazy(() => import('../page/Home/subPage/AccInfo/AccList'))
 const AccChange = lazy(() => import('../page/Home/subPage/AccInfo/AccChange'))
 const AccAdd = lazy(() => import('../page/Home/subPage/AccInfo/AccAdd'))
+
+//配置中心
+const Config = lazy(() => import('../page/Home/subPage/Config'))
+const ConfigPage = lazy(() => import('../page/Home/subPage/Config/ConfigPage'))
+const ConfigDict = lazy(() => import('../page/Home/subPage/Config/ConfigDict'))
 
 
 const Personal = lazy(() => import('../page/Home/Personal'))
@@ -43,7 +51,7 @@ export default [
         path: '/main/storeInfo',
         key: '/main/storeInfo',
         components: StoreInfo,
-        auth: ['super', 'normal'],
+        auth: ['super'],
         icon: MenuFoldOutlined
     },
     {
@@ -75,7 +83,7 @@ export default [
                 path: '/main/shopInfo/shopAdd',
                 key: '/main/shopInfo/shopAdd',
                 components: ShopAdd,
-                auth: ['super', 'normal'],
+                auth: ['super'],
                 icon: DiffOutlined,
             }
         ]
@@ -110,6 +118,32 @@ export default [
                 key: '/main/accInfo/accAdd',
                 components: AccAdd,
                 icon: PlusOutlined,
+                auth: ['super'],
+            }
+        ]
+    },
+    {
+        name: '配置中心',
+        path: '/main/config',
+        key: '/main/config',
+        components: Config,
+        icon: SettingOutlined,
+        auth: ['super'],
+        children: [
+            {
+                name: '页面配置',
+                path: '/main/config/configPage',
+                key: '/main/config/configPage',
+                components: ConfigPage,
+                icon: ProfileOutlined,
+                auth: ['super'],
+            },
+            {
+                name: '页面字典',
+                path: '/main/config/configDict',
+                key: '/main/config/configDict',
+                components: ConfigDict,
+                icon: ReadOutlined,
                 auth: ['super'],
             }
         ]

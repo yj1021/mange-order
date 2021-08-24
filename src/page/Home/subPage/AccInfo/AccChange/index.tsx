@@ -1,4 +1,4 @@
-import React, { ReactElement, useState } from 'react';
+import React, { ReactElement, useState, useRef } from 'react';
 import BaseForm from '@/component/BaseForm/index';
 import ChangeForm from '@/component/form/ChangeForm'
 import { FormItem } from '@/type';
@@ -6,12 +6,17 @@ import { requiredRegs, usernameRegs, pwdRegs } from '@/utils/regs'
 import { useSelector, useDispatch } from 'react-redux'
 import { USERINFO } from '@/redux/type'
 import { USER_ROLE } from '@/contants/contants'
+import { notification } from 'antd'
 
 interface Props {
     
 }
 
 export default function AccChange({}: Props): ReactElement {
+
+    const ref: {
+        current: any
+    } = useRef()
 
     const dispatch = useDispatch()
     const userInfo = useSelector((state: any) => state.userInfo)
@@ -112,10 +117,16 @@ export default function AccChange({}: Props): ReactElement {
                 role
             }
         })
+        notification.success({
+            message: '提交提醒',
+            description: '提交账号信息成功'
+        })
+        ref.current.resetData()
     }
     return (
         <>
-            <BaseForm 
+            <BaseForm
+                cRef={ref}
                 formList={formList} 
                 getFormData={getFormData} 
                 resetFn={() => {}} 

@@ -1,5 +1,5 @@
 import React, { ReactElement, ReactNode } from 'react';
-import { Form, Input, Button, Space, Select, Switch, InputNumber, Layout } from 'antd';
+import { Form, Input, Button, Space, Select, Switch, InputNumber, Layout, notification } from 'antd';
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
 import { FormItem } from '@/type'
 import DelBtn from '@/component/button/DelBtn'
@@ -43,7 +43,7 @@ export default function AddForm({
   }
 
   const getFormItem = (formItem): ReactNode => {
-    const { type, placeholder, optionList, name, width, maxLength } = formItem;
+    const { type, placeholder, optionList, name, width, maxLength, callBack } = formItem;
     switch (type) {
       case 'password':
         return <Input.Password style={{width}} placeholder={placeholder} key={name + 'item'}/>;
@@ -54,7 +54,7 @@ export default function AddForm({
       case 'textArea':
         return <Input.TextArea style={{width}} showCount maxLength={maxLength} allowClear/>;
       case 'select':
-        return <Select style={{width: width || 200}} key={name + 'item'} allowClear onChange={(e) => onChange(e, name)}>
+        return <Select style={{width: width || 200}} key={name + 'item'} allowClear onChange={(val) => {onChange(val, name); callBack(val)}}>
                 { optionList.map(option => {
                   const { value, label } = option
                   return <Option value={value} key={value}>{label}</Option>
@@ -104,6 +104,11 @@ export default function AddForm({
                             <Button type="dashed" onClick={() => {
                                 form.validateFields().then(res => {
                                     add()
+                                }).catch(e => {
+                                  notification.warning({
+                                    message: '添加提醒',
+                                    description: '请正确完善信息后添加'
+                                  })
                                 })
                             }}>
                                添加

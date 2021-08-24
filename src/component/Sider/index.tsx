@@ -2,7 +2,7 @@ import React, { ReactElement, ReactNode, useState, useEffect } from 'react';
 import { Menu } from 'antd';
 import menuList from '@/contants/mainRouter';
 import { NavLink, useLocation } from 'react-router-dom';
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { CHANGEMENU } from '@/redux/type'
 
 const { SubMenu, Item } = Menu;
@@ -13,6 +13,7 @@ export default function Sider({}: Props): ReactElement {
   const location = useLocation()
   const [openkey, setOpenkey] = useState<string[]>(JSON.parse(sessionStorage.openKeys || '[]'))
   const dispatch = useDispatch()
+  const { role } = useSelector((state: any) => state.userInfo)
   
 
   useEffect(() => {
@@ -30,19 +31,23 @@ export default function Sider({}: Props): ReactElement {
 
   const renderMenu = (menuList): ReactNode => {
     return menuList.map(menuItem => {
-      let { key, icon, name, children, path } = menuItem;
+      let { key, icon, name, children, path, auth } = menuItem;
       let IcomComp = icon;
       if (children && Array.isArray(children) && children.length) {
         return (
-          <SubMenu key={key} title={name} icon={icon && <IcomComp />}>
-            {renderMenu(children)}
-          </SubMenu>
+          <>
+            {auth.includes(role) && <SubMenu key={key} title={name} icon={icon && <IcomComp />}>
+              {renderMenu(children)}
+            </SubMenu>}
+          </>
         );
       } else {
         return (
-          <Item key={key} icon={icon && <IcomComp />}>
-            <NavLink to={path}>{name}</NavLink>
-          </Item>
+          <>
+            {auth.includes(role) && <Item key={key} icon={icon && <IcomComp />}>
+              <NavLink to={path}>{name}</NavLink>
+            </Item>}
+          </>
         );
       }
     });
