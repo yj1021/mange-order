@@ -12,7 +12,9 @@ import {
     PlusOutlined,
     SettingOutlined,
     ProfileOutlined,
-    ReadOutlined
+    ReadOutlined,
+    BankOutlined,
+    AimOutlined
 } from '@ant-design/icons';
 
 const MainHome = lazy(() => import('@/page/Home/subPage/Home'))
@@ -31,6 +33,9 @@ const AccAdd = lazy(() => import('../page/Home/subPage/AccInfo/AccAdd'))
 const Config = lazy(() => import('../page/Home/subPage/Config'))
 const ConfigPage = lazy(() => import('../page/Home/subPage/Config/ConfigPage'))
 const ConfigDict = lazy(() => import('../page/Home/subPage/Config/ConfigDict'))
+const ConfigGps = lazy(() => import('../page/Home/subPage/Config/ConfigGps'))
+
+const StoreManage = lazy(() => import('../page/Home/subPage/StoreManage'))
 
 
 const Personal = lazy(() => import('../page/Home/Personal'))
@@ -145,8 +150,24 @@ export default [
                 components: ConfigDict,
                 icon: ReadOutlined,
                 auth: ['super'],
-            }
+            },
+            {
+                name: '地址',
+                path: '/main/config/configGps',
+                key: '/main/config/configGps',
+                components: ConfigGps,
+                icon: BankOutlined,
+                auth: ['super'],
+            },
         ]
+    },
+    {
+        name: '商户管理',
+        path: '/main/storeManage',
+        key: '/main/storeManage',
+        components: StoreManage,
+        icon: AimOutlined,
+        auth: ['super']
     },
     {
         name: '个人中心',

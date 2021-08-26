@@ -29,6 +29,7 @@ export default function DictHeader({
   const add = () => {
     let key = nanoid()
     setPaneList((list: any) => {
+        console.log(list, "++")
         let newList = [...list]
         newList.push({
             title: 'new tab',

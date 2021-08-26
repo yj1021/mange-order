@@ -9,6 +9,8 @@ import './index.less'
 
 interface Props {}
 
+const usernameList = ['admin', 'yijiang', 'yj0330']
+
 export default function Login({}: Props): ReactElement {
 
     const history = useHistory()
@@ -44,21 +46,17 @@ export default function Login({}: Props): ReactElement {
       name: 'pwd',
       label: '密码',
       rules: [{ ...requiredRegs, message: '请输入密码' }],
-      placeholder: '请输入密码'
+      placeholder: '密码1234'
     },
   ];
 
   const getFormData = val => {
       let { username, pwd } = val
-      if(username === 'admin' && pwd === '123') {
-        sessionStorage.userInfo = JSON.stringify({
-            username,
-            pwd
-        })
+      if(usernameList.includes(username) && pwd === '1234') {
         dispatch({
             type: USERINFO,
             format: {
-                role: 'super',
+                role: username === 'yj0330' ? 'normal' : 'super',
                 username,
                 token: 'dahsidhas21iodaisjdoandansdas'
             }
