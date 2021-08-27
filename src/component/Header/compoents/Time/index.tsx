@@ -15,6 +15,10 @@ export default function Time({}: Props): ReactElement {
             let data_format = moment(date).format('YYYY-MM-DD HH:mm:ss')
             setTime(data_format)
         }, 1000)
+
+        return () => {
+            clearInterval(timer)
+        }
     }, [])
 
     return (

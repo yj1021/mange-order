@@ -8,6 +8,7 @@ import { ConfigProvider } from 'antd'
 import zh_CN from 'antd/lib/locale-provider/zh_CN';
 import 'moment/locale/zh-cn';
 import 'antd/dist/antd.css'
+import './asstes/font/iconfont.css'
 
 ReactDOM.render(
   <React.StrictMode>

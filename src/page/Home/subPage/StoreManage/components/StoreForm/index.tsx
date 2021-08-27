@@ -9,7 +9,6 @@ import {
   InputNumber,
   Checkbox
 } from 'antd';
-import Upload from '../form/Upload'
 import { FormItem } from '@/type';
 import Layout from 'antd/lib/layout/layout';
 import _ from 'lodash'
@@ -36,7 +35,7 @@ interface Props {
   nextStep?: () => void
 }
 
-export default function BaseForm({
+export default function StoreForm({
   formList,
   layout = 'horizontal',
   formItemLayout = {
@@ -69,11 +68,6 @@ export default function BaseForm({
   const [form]: Array<any> = Form.useForm();
   const [fileList, setFileList] = useState<any[]>()
 
-  // useEffect(() => {
-  //   let formItem = formList.find(item => item.type === 'upload')
-
-  // }, [])
-
   const onFinish = _.debounce((value): void => {
     getFormData(value)
   }, 1000);
@@ -86,12 +80,6 @@ export default function BaseForm({
     formList.map((formItem, index) => {
       const { type, label, name, rules } = formItem;
       switch(type) {
-        case 'upload':
-           return(
-              <Form.Item name={name} label={label} rules={rules} valuePropName="fileList" key={name} getValueFromEvent={normFile}>
-                {getFormItem(formItem)}
-              </Form.Item>
-           ) 
         default:
           return (
               <Form.Item name={name} label={label} rules={rules} key={name}>
@@ -102,20 +90,6 @@ export default function BaseForm({
       
     });
 
-  const uploadChange = _.debounce((list, item) => {
-    let { name } = item
-    // list.push({
-    //   uid: '-3',
-    //   name: 'image.png',
-    //   status: 'done',
-    //   url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png'
-    // })
-    setFileList(list)
-    form.setFieldsValue({
-      [name]: list.filter(item => item.status === 'done')
-    })
-  }, 500)
-
   const getFormItem = (formItem): ReactNode => {
     const { type, placeholder, optionList, name, width, maxLength } = formItem;
     switch (type) {
@@ -125,13 +99,6 @@ export default function BaseForm({
         return <Switch defaultChecked  style={{width}}/>;
       case 'number':
         return <InputNumber style={{width}} min={0} step="0.01"/>;
-      case 'upload':
-        return <Upload style={{width}} {...formItem} fileList={fileList} uploadChange={(list) => uploadChange(list, formItem)}/>;
-        // return (
-        //   // <Upload name="logo" action="/upload.do" listType="picture">
-        //   //   <Button icon={<UploadOutlined />}>Click to upload</Button>
-        //   // </Upload>
-        // )
       case 'checkbox':
         return <Checkbox.Group options={optionList} />
       case 'textArea':
@@ -165,15 +132,13 @@ export default function BaseForm({
       {formItem(formList)}
         <div className="action" style={style}>
           <Space>
-            {isShowSubmitBtn && <Button className='submitBtn' type="primary" htmlType="submit" onClick={onClick}>
+            <Button>上一步</Button>
+            <Button className='submitBtn' htmlType="submit" onClick={onClick}>
                 { submitText }
-            </Button>}
-            {specialBtn && specialBtn.btn &&<Button type="primary" onClick={nextStep}>
-                {specialBtn.text}
-            </Button>}
-            {resetFn &&<Button type="primary" onClick={resetData}>
+            </Button>
+            <Button onClick={resetData}>
                 重置
-            </Button>}
+            </Button>
           </Space>
         </div>
     </Form>

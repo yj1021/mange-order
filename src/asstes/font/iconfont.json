@@ -1,0 +1,72 @@
+{
+  "id": "2772583",
+  "name": "order_manger",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "796730",
+      "name": "基本信息",
+      "font_class": "jibenxinxi",
+      "unicode": "e615",
+      "unicode_decimal": 58901
+    },
+    {
+      "icon_id": "1317778",
+      "name": "商店",
+      "font_class": "shangdian",
+      "unicode": "e60f",
+      "unicode_decimal": 58895
+    },
+    {
+      "icon_id": "3769199",
+      "name": "支付",
+      "font_class": "zhifu",
+      "unicode": "e8f9",
+      "unicode_decimal": 59641
+    },
+    {
+      "icon_id": "7552710",
+      "name": "风控",
+      "font_class": "RectangleCopy",
+      "unicode": "e6d2",
+      "unicode_decimal": 59090
+    },
+    {
+      "icon_id": "9945105",
+      "name": "审核",
+      "font_class": "shenhe",
+      "unicode": "e6a1",
+      "unicode_decimal": 59041
+    },
+    {
+      "icon_id": "20022032",
+      "name": "账号信息",
+      "font_class": "zhanghaoxinxi",
+      "unicode": "e64c",
+      "unicode_decimal": 58956
+    },
+    {
+      "icon_id": "21745674",
+      "name": "快递",
+      "font_class": "kuaidi",
+      "unicode": "e74b",
+      "unicode_decimal": 59211
+    },
+    {
+      "icon_id": "774439",
+      "name": "箭头1",
+      "font_class": "jiantou1",
+      "unicode": "e657",
+      "unicode_decimal": 58967
+    },
+    {
+      "icon_id": "14175426",
+      "name": "新建",
+      "font_class": "xinjian",
+      "unicode": "e641",
+      "unicode_decimal": 58945
+    }
+  ]
+}

@@ -1,0 +1,44 @@
+.store {
+    .store_header{
+        border: 1px solid #f5f5f5;
+        padding: 10px;
+        display: flex;
+        .header_item {
+            text-align: center;
+            margin-right: 60px;
+            color: #ccc;
+            position: relative;
+            &.active {
+                color: #f60;
+            }
+            .iconfont {
+                font-size: 50px;
+            }
+            .icon-jiantou1 {
+                position: absolute;
+                top: 10px;
+                right: -60px;
+            }
+            // &:not(:last-child):after {
+            //     content: '';
+            //     display: block;
+            //     width: 20px;
+            //     height: 2px;
+            //     position: absolute;
+            //     right: -20px;
+            //     top: 50%;
+            //     // background: #000;
+            //     background: url(../../../../../../asstes/img/step_a.png) no-repeat;
+            // }
+        }
+    }
+    .store_main {
+        margin: 20px 0;
+        border: 1px solid #f5f5f5;
+        padding: 20px;
+    }
+    .store_footer {
+        display: flex;
+        justify-content: center;
+    }
+}

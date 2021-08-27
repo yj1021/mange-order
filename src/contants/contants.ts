@@ -85,3 +85,19 @@ export const DARE_TYPE = [
         label: '天'
     }
 ]
+
+//商户类型
+export const STORE_TYPE = [
+    {
+        label: '自建聚合',
+        value: 'zjjh'
+    },
+    {
+        label: '交易通',
+        value: 'jyt'
+    },
+    {
+        label: '易收付',
+        value: 'ysf'
+    },
+]
