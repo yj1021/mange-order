@@ -1,6 +1,7 @@
-import React, { ReactElement, ReactChild } from 'react'
+import React, { ReactElement, ReactChild, useEffect, useState } from 'react'
 import { Button, Space } from 'antd'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
+import { MAX_STEP, CHANGE_STEP } from '@/redux/type'
 import './index.less'
 
 interface Props {
@@ -15,15 +16,34 @@ export default function StoreContainer({
     children
 }: Props): ReactElement {
 
-    const step = useSelector((state: any) => state.storeInfo.step) 
+    const dispatch = useDispatch()
+    const step = useSelector((state: any) => state.storeInfo.step)
+    const maxStep = useSelector((state: any) => state.storeInfo.maxStep)
 
+    useEffect(() => {
+        if(step > maxStep) {
+            dispatch({
+                type: MAX_STEP,
+                params: step
+            })
+        }
+    }, [step])
+
+    const headerClick = (status: boolean, index: number) => {
+        if(!status) return
+        dispatch({
+            type: CHANGE_STEP,
+            params: index
+        })
+        console.log(123)
+    }
 
     return (
         <div className='store'>
             <div className='store_header'>
                 {
                     headerList.map((item, index) => (
-                        <div className={['header_item', index <= step ? 'active' : ''].join(' ')}>
+                        <div className={['header_item', index <= maxStep ? 'active' : ''].join(' ')} key={item.title} onClick={() => headerClick(index <= maxStep, index)}>
                             <i className={['iconfont', item.className].join(' ')}></i>
                             {index < headerList.length -1 && <i className='iconfont icon-jiantou1'></i> }
                             <div>{ item.title }</div>

@@ -1,4 +1,4 @@
-import React, { ReactElement, ReactNode, useState, useEffect, useImperativeHandle } from 'react';
+import React, { ReactElement, ReactNode, useState, useMemo, useEffect, useImperativeHandle } from 'react';
 import { 
   Form, 
   Input, 
@@ -10,15 +10,17 @@ import {
   Checkbox
 } from 'antd';
 import { FormItem } from '@/type';
+import { useSelector, useDispatch } from 'react-redux'
+import { CHANGE_STEP, ADD_STORE_INFO } from '@/redux/type'
 import Layout from 'antd/lib/layout/layout';
 import _ from 'lodash'
+import './index.less'
 
 
 const { Option } = Select
 interface Props {
   formList: Array<FormItem>;
-  getFormData: Function;
-  onClick?: () => void;
+  getFormData?: Function;
   isShowSubmitBtn?:boolean;
   placeholder?: any;
   layout?: any;
@@ -32,32 +34,20 @@ interface Props {
     btn: boolean;
     text: '添加' | '下一步';
   },
-  nextStep?: () => void
 }
 
 export default function StoreForm({
   formList,
   layout = 'horizontal',
-  formItemLayout = {
-    labelCol: {
-      xs: { span: 8 },
-      sm: { span: 6 },
-    },
-    // wrapperCol: {
-    //   xs: { span: 24 },
-    //   sm: { span: 8 },
-    // },
-  },
+  formItemLayout = {},
   style= {},
   submitText = '搜索',
   specialBtn,  //特别的按钮文字
-  nextStep,
   resetFn,
   getFormData,
   initData,
   placeholder,
   cRef,
-  onClick,
   isShowSubmitBtn = true
 }: Props): ReactElement {
 
@@ -65,16 +55,19 @@ export default function StoreForm({
     resetData: () => resetData(),
   }))
 
+  const storeInfo: any = useSelector((state: any) => state.storeInfo)
+  const dispatch = useDispatch()
+
   const [form]: Array<any> = Form.useForm();
   const [fileList, setFileList] = useState<any[]>()
 
   const onFinish = _.debounce((value): void => {
-    getFormData(value)
+    getFormData && getFormData(value)
   }, 1000);
 
-  const normFile = (e) => {
-    // console.log(e)
-  }
+  useEffect(() => {
+    form.setFieldsValue(storeInfo)
+  }, [storeInfo])
 
   const formItem = (formList): ReactNode =>
     formList.map((formItem, index) => {
@@ -91,7 +84,7 @@ export default function StoreForm({
     });
 
   const getFormItem = (formItem): ReactNode => {
-    const { type, placeholder, optionList, name, width, maxLength } = formItem;
+    const { type, placeholder, optionList, name, width, maxLength, onChange } = formItem;
     switch (type) {
       case 'password':
         return <Input.Password style={{width}} placeholder={placeholder} key={name + 'item'}/>;
@@ -100,11 +93,11 @@ export default function StoreForm({
       case 'number':
         return <InputNumber style={{width}} min={0} step="0.01"/>;
       case 'checkbox':
-        return <Checkbox.Group options={optionList} />
+        return <Checkbox.Group options={optionList} onChange={onChange}/>
       case 'textArea':
         return <Input.TextArea style={{width}} showCount maxLength={maxLength} allowClear/>;
       case 'select':
-        return <Select style={{width: width || 200}} key={name + 'item'} allowClear>
+        return <Select style={{width: width || '100%'}} key={name + 'item'} allowClear>
                 { optionList.map(option => {
                   const { value, label } = option
                   return <Option value={value} key={value}>{label}</Option>
@@ -120,6 +113,27 @@ export default function StoreForm({
     setFileList([])
     resetFn && resetFn()
   }
+
+  const preStep = () => {
+    dispatch({
+      type: CHANGE_STEP,
+      params: storeInfo.step - 1
+    })
+  }
+
+  const nextStep = () => {
+    form.validateFields().then(params => {
+      dispatch({
+        type: ADD_STORE_INFO,
+        params
+      })
+      dispatch({
+        type: CHANGE_STEP,
+        params: storeInfo.step + 1
+      })
+    })
+    
+  }
   
   return (
     <Form 
@@ -128,14 +142,17 @@ export default function StoreForm({
         onFinish={onFinish} 
         layout={layout}
         initialValues={initData}
+        className='store_form'
     >
-      {formItem(formList)}
+      <div className='form_main'>
+        {formItem(formList)}
+      </div>
         <div className="action" style={style}>
           <Space>
-            <Button>上一步</Button>
-            <Button className='submitBtn' htmlType="submit" onClick={onClick}>
+            {storeInfo.step > 0 && <Button onClick={preStep}>上一步</Button>}
+            {storeInfo.step < 7 && <Button className='submitBtn' htmlType="submit" onClick={nextStep}>
                 { submitText }
-            </Button>
+            </Button>}
             <Button onClick={resetData}>
                 重置
             </Button>

@@ -10,32 +10,33 @@
             position: relative;
             &.active {
                 color: #f60;
+                cursor: pointer;
             }
             .iconfont {
                 font-size: 50px;
             }
             .icon-jiantou1 {
                 position: absolute;
+                cursor: auto;
                 top: 10px;
                 right: -60px;
             }
-            // &:not(:last-child):after {
-            //     content: '';
-            //     display: block;
-            //     width: 20px;
-            //     height: 2px;
-            //     position: absolute;
-            //     right: -20px;
-            //     top: 50%;
-            //     // background: #000;
-            //     background: url(../../../../../../asstes/img/step_a.png) no-repeat;
-            // }
         }
     }
     .store_main {
         margin: 20px 0;
         border: 1px solid #f5f5f5;
         padding: 20px;
+        .form_main {
+            display: flex;
+            flex-wrap: wrap;
+            .ant-row {
+                width: 30%;
+                &:not(:nth-child(3n)) {
+                    margin-right: 5%;
+                }
+            }
+        }
     }
     .store_footer {
         display: flex;
