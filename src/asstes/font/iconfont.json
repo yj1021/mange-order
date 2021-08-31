@@ -6,6 +6,20 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "5041098",
+      "name": "不通过",
+      "font_class": "butongguo",
+      "unicode": "e7c8",
+      "unicode_decimal": 59336
+    },
+    {
+      "icon_id": "8312527",
+      "name": "通过",
+      "font_class": "tongguo",
+      "unicode": "e629",
+      "unicode_decimal": 58921
+    },
+    {
       "icon_id": "796730",
       "name": "基本信息",
       "font_class": "jibenxinxi",

@@ -62,7 +62,7 @@ export default function BaseInfo({}: Props): ReactElement {
 
     return (
         <div>
-            <StoreForm formList={formList} submitText='下一步'/>
+            <StoreForm formList={formList} submitText='下一步' infoType='baseInfo'/>
         </div>
     )
 }

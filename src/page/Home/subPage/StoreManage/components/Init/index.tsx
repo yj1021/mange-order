@@ -27,7 +27,7 @@ export default function Init({}: Props): ReactElement {
 
     return (
         <div className='init'>
-            <StoreForm formList={formList} submitText='下一步'/>
+            <StoreForm formList={formList} submitText='下一步' infoType='init'/>
         </div>
     )
 }

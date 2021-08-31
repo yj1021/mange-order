@@ -1,6 +1,7 @@
 import React, { ReactElement } from 'react'
 import StoreForm from '../StoreForm';
 import { CARD_TYPE } from '@/contants/contants'
+import './index.less'
 
 interface Props {
     
@@ -42,19 +43,19 @@ export default function StoreInfo({}: Props): ReactElement {
             ]
         },
         {
-            type: 'input',
+            type: 'time',
             name: 'date',
-            label: '营业时间',
+            label: '活动时间',
             rules: [
-                {required: true, message: '营业时间必填'}
+                {required: true, message: '活动时间必填'}
             ],
             optionList: CARD_TYPE
         }
     ]
 
     return (
-        <div>
-            <StoreForm formList={formList} submitText='下一步'/>
+        <div className='store_info'>
+            <StoreForm formList={formList} submitText='下一步' infoType='storeInfo'/>
         </div>
     )
 }

@@ -101,3 +101,19 @@ export const STORE_TYPE = [
         value: 'ysf'
     },
 ]
+
+//支付方式
+export const APY_TYPE = [
+    {
+        label: '微信',
+        value: 'wx'
+    },
+    {
+        label: '支付宝',
+        value: 'zfb'
+    },
+    {
+        label: '银联',
+        value: 'yl'
+    }
+]

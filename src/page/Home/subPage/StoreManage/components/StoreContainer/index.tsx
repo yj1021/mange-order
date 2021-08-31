@@ -35,11 +35,11 @@ export default function StoreContainer({
             type: CHANGE_STEP,
             params: index
         })
-        console.log(123)
     }
 
     return (
         <div className='store'>
+            <div className='current_modules'>当前模块: <span>{ headerList[step].title }</span></div>
             <div className='store_header'>
                 {
                     headerList.map((item, index) => (

@@ -13,12 +13,14 @@ import { FormItem } from '@/type';
 import { useSelector, useDispatch } from 'react-redux'
 import { CHANGE_STEP, ADD_STORE_INFO } from '@/redux/type'
 import Layout from 'antd/lib/layout/layout';
+import PickDateRange from '@/component/form/PickDate';
 import _ from 'lodash'
 import './index.less'
 
 
 const { Option } = Select
 interface Props {
+  infoType: string;
   formList: Array<FormItem>;
   getFormData?: Function;
   isShowSubmitBtn?:boolean;
@@ -34,6 +36,7 @@ interface Props {
     btn: boolean;
     text: '添加' | '下一步';
   },
+  children?: ReactNode
 }
 
 export default function StoreForm({
@@ -48,7 +51,9 @@ export default function StoreForm({
   initData,
   placeholder,
   cRef,
-  isShowSubmitBtn = true
+  infoType,
+  isShowSubmitBtn = true,
+  children
 }: Props): ReactElement {
 
   useImperativeHandle(cRef, () => ({
@@ -66,7 +71,7 @@ export default function StoreForm({
   }, 1000);
 
   useEffect(() => {
-    form.setFieldsValue(storeInfo)
+    form.setFieldsValue(storeInfo[infoType])
   }, [storeInfo])
 
   const formItem = (formList): ReactNode =>
@@ -83,6 +88,19 @@ export default function StoreForm({
       
     });
 
+  const getTimeRange = (timeRange, name) => {
+    if(timeRange.length === 2 && timeRange.every((item) => item)) {
+      form.setFieldsValue({
+        [name]: timeRange
+      })
+    }else{
+      form.setFieldsValue({
+        [name]: ''
+      })
+    }
+    
+  }
+
   const getFormItem = (formItem): ReactNode => {
     const { type, placeholder, optionList, name, width, maxLength, onChange } = formItem;
     switch (type) {
@@ -92,12 +110,14 @@ export default function StoreForm({
         return <Switch defaultChecked  style={{width}}/>;
       case 'number':
         return <InputNumber style={{width}} min={0} step="0.01"/>;
+      case 'time':
+        return <PickDateRange showTimeRange={storeInfo[name] || []} getTimeRange={(timeRange) => getTimeRange(timeRange, name)} />;
       case 'checkbox':
         return <Checkbox.Group options={optionList} onChange={onChange}/>
       case 'textArea':
         return <Input.TextArea style={{width}} showCount maxLength={maxLength} allowClear/>;
       case 'select':
-        return <Select style={{width: width || '100%'}} key={name + 'item'} allowClear>
+        return <Select style={{width: width || '100%'}} key={name + 'item'} allowClear onChange={onChange}>
                 { optionList.map(option => {
                   const { value, label } = option
                   return <Option value={value} key={value}>{label}</Option>
@@ -125,7 +145,9 @@ export default function StoreForm({
     form.validateFields().then(params => {
       dispatch({
         type: ADD_STORE_INFO,
-        params
+        params: {
+          [infoType]: params
+        }
       })
       dispatch({
         type: CHANGE_STEP,
@@ -146,13 +168,14 @@ export default function StoreForm({
     >
       <div className='form_main'>
         {formItem(formList)}
+        {children}
       </div>
         <div className="action" style={style}>
           <Space>
             {storeInfo.step > 0 && <Button onClick={preStep}>上一步</Button>}
-            {storeInfo.step < 7 && <Button className='submitBtn' htmlType="submit" onClick={nextStep}>
+            <Button className='submitBtn' htmlType="submit" onClick={nextStep}>
                 { submitText }
-            </Button>}
+            </Button>
             <Button onClick={resetData}>
                 重置
             </Button>
