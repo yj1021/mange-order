@@ -69,6 +69,8 @@ export default function BaseForm({
   const [form]: Array<any> = Form.useForm();
   const [fileList, setFileList] = useState<any[]>()
 
+
+
   // useEffect(() => {
   //   let formItem = formList.find(item => item.type === 'upload')
 

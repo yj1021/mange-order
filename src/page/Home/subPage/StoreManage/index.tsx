@@ -73,7 +73,8 @@ export default function StoreManage({}: Props): ReactElement {
     const dispatch = useDispatch()
     const [start, setStart] = useState<boolean>(false)
     const [loading, setLoading] = useState<boolean>(false)
-    const step = useSelector((state: any) => state.storeInfo.step) 
+    const step = useSelector((state: any) => state.storeInfo.step)
+    const storeInfo = useSelector((state: any) => state.storeInfo)
 
     const createStore = () => {
         setLoading(true)
@@ -97,6 +98,15 @@ export default function StoreManage({}: Props): ReactElement {
             type: GET_SUM_COUNT,
             params: headerList.length
         })
+        // return () => {
+        //     console.log(storeInfo, step, headerList.length, '0-0')
+        //     if(step < headerList.length - 1) {
+
+        //         dispatch({
+        //             type: CLEAR_STORE_INFO
+        //         })
+        //     }
+        // }
     }, [])
     
 

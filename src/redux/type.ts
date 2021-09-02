@@ -1,5 +1,7 @@
 export const USERINFO = 'USERINFO'
 
+export const SET_FORM = 'SET_FORM'
+
 export const CHANGEMENU = 'CHANGEMENU'
 
 export const ClEAR_INFO = 'ClEAR_INFO'

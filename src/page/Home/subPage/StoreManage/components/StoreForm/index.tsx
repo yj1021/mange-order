@@ -1,4 +1,4 @@
-import React, { ReactElement, ReactNode, useState, useMemo, useEffect, useImperativeHandle } from 'react';
+import React, { ReactElement, ReactNode, useState, useCallback, useEffect, useImperativeHandle } from 'react';
 import { 
   Form, 
   Input, 
@@ -7,14 +7,17 @@ import {
   Select, 
   Switch, 
   InputNumber,
-  Checkbox
+  Checkbox,
+  notification
 } from 'antd';
 import { FormItem } from '@/type';
 import { useSelector, useDispatch } from 'react-redux'
-import { CHANGE_STEP, ADD_STORE_INFO } from '@/redux/type'
+import { CHANGE_STEP, ADD_STORE_INFO, SET_FORM } from '@/redux/type'
 import Layout from 'antd/lib/layout/layout';
 import PickDateRange from '@/component/form/PickDate';
+import { useHistory } from 'react-router-dom'
 import _ from 'lodash'
+import localforage from 'localforage'
 import './index.less'
 
 
@@ -61,10 +64,18 @@ export default function StoreForm({
   }))
 
   const storeInfo: any = useSelector((state: any) => state.storeInfo)
-  const dispatch = useDispatch()
+  const dispatch = useCallback(useDispatch(), [])
+  const history = useHistory()
 
   const [form]: Array<any> = Form.useForm();
   const [fileList, setFileList] = useState<any[]>()
+
+  useEffect(() => {
+    dispatch({
+      type: SET_FORM,
+      params: form
+    })
+  }, [form])
 
   const onFinish = _.debounce((value): void => {
     getFormData && getFormData(value)
@@ -98,7 +109,6 @@ export default function StoreForm({
         [name]: ''
       })
     }
-    
   }
 
   const getFormItem = (formItem): ReactNode => {
@@ -143,18 +153,33 @@ export default function StoreForm({
 
   const nextStep = () => {
     form.validateFields().then(params => {
+      //{...storeInfo, [infoType]: params}
+      let info = {...storeInfo, [infoType]: params}
+      if(submitText !== '提交') {
+        dispatch({
+          type: CHANGE_STEP,
+          params: storeInfo.step + 1
+        })
+      }
+
       dispatch({
         type: ADD_STORE_INFO,
         params: {
           [infoType]: params
         }
       })
-      dispatch({
-        type: CHANGE_STEP,
-        params: storeInfo.step + 1
-      })
+
+      if(submitText === '提交') {
+        notification.success({
+          message: '保存结果',
+          description: '信息保存成功'
+        })
+        history.push({
+          pathname: '/main/storeInfo'
+        })
+      }
+      
     })
-    
   }
   
   return (

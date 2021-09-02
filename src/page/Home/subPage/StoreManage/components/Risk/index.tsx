@@ -9,7 +9,7 @@ interface Props {
     
 }
 
-let num = Math.random()
+let num = 1
 
 let status = num > 0.5
 

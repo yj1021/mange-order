@@ -36,14 +36,14 @@ export default function index({
     });
 
     const getFormItem = (formItem): ReactNode => {
-        const { type, placeholder, optionList, name, width, maxLength, onChange } = formItem;
+        const { type, placeholder, optionList, name, width, maxLength, onChange, disabled, defaultValue } = formItem;
         switch (type) {
           case 'password':
             return <Input.Password style={{width}} placeholder={placeholder} key={name + 'item'}/>;
           case 'switch':
             return <Switch defaultChecked  style={{width}}/>;
           case 'number':
-            return <InputNumber style={{width}} min={0} step="0.01"/>;
+            return <InputNumber disabled={disabled} style={{width}} min={0} step="0.01"/>;
           case 'checkbox':
             return <Checkbox.Group options={optionList} onChange={onChange}/>
           case 'textArea':
@@ -56,7 +56,7 @@ export default function index({
                     })} 
                    </Select>
           default:
-            return <Input style={{width}} placeholder={placeholder} allowClear key={name + 'item'}/>;
+            return <Input style={{width}} disabled={disabled} placeholder={placeholder} allowClear key={name + 'item'}/>;
         }
       };
 

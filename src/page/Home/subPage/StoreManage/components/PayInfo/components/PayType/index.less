@@ -1,0 +1,31 @@
+.pay_type_item {
+    display: flex;
+    align-items: center;
+    border: 1px solid #f5f5f5;
+    .tip {
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+        overflow: hidden;
+    }
+    i {
+        font-size: 50px;
+        padding: 10px;
+        
+    }
+    .icon-weixin {
+        &.active {
+            color: rgb(129, 199, 25);
+        }
+    }
+    .icon-zhifubao {
+        &.active {
+            color: rgb(42, 153, 218);
+        }
+    }
+    .icon-zhifupingtai-yinlian {
+        &.active {
+            color: rgb(131, 21, 54);
+        }
+    }
+}
